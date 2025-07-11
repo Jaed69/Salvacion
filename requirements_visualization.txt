@@ -1,0 +1,16 @@
+# Dependencias adicionales para análisis estadístico visual
+# LSP Esperanza - Statistical Analysis Requirements
+
+# Visualización y gráficos
+seaborn>=0.12.0
+matplotlib>=3.6.0
+plotly>=5.15.0
+kaleido>=0.2.1
+
+# Análisis de datos
+pandas>=1.5.0
+numpy>=1.21.0
+scipy>=1.9.0
+
+# Utilidades
+pathlib2>=2.3.0
