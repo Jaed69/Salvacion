@@ -1,0 +1,61 @@
+# LSP Esperanza - Dependencias del Proyecto
+# ============================================
+# Compatible con Python 3.12.11 en entorno conda "LS"
+
+# ========== CORE DEPENDENCIES ==========
+# Computer Vision y Detección de Landmarks
+opencv-python==4.11.0.86
+opencv-contrib-python==4.11.0.86
+mediapipe==0.10.21
+
+# Machine Learning y Deep Learning
+tensorflow==2.18.1
+keras==3.5.0
+numpy==1.26.4
+scikit-learn==1.7.0
+scipy==1.16.0
+
+# ========== DATA & VISUALIZATION ==========
+# Análisis y Manipulación de Datos
+pandas==2.3.1
+matplotlib==3.10.3
+seaborn==0.13.2
+pillow==11.3.0
+
+# ========== UTILITIES ==========
+# Barras de Progreso y CLI
+tqdm==4.67.1
+colorama==0.4.6
+rich==14.0.0
+
+# Configuración y Datos
+pyyaml==6.0.2
+requests==2.32.4
+
+# ========== OPTIONAL EXTENSIONS ==========
+# Audio Processing (para futuras extensiones)
+sounddevice==0.5.2
+
+# Computación Científica Avanzada
+jax==0.6.2
+jaxlib==0.6.2
+
+# ========== DEVELOPMENT & TESTING ==========
+# Testing Framework
+pytest==8.4.1
+
+# Code Quality (descomenta si necesitas)
+# black>=23.0.0
+# flake8>=6.0.0
+# autopep8>=2.0.0
+
+# Documentation (descomenta si necesitas)
+# mkdocs>=1.5.0
+# mkdocs-material>=9.0.0
+
+# ========== INSTALLATION NOTES ==========
+# Para instalar todas las dependencias:
+# pip install -r requirements.txt
+#
+# Para instalar solo dependencias core:
+# pip install tensorflow==2.18.1 opencv-python==4.11.0.86 mediapipe==0.10.21 numpy==1.26.4

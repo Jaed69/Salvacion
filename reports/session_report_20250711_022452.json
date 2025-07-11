@@ -1,0 +1,949 @@
+{
+  "start_time": "2025-07-11T02:22:13.942750",
+  "collected_signs": {
+    "B": [
+      {
+        "filename": "20250711_022308_q83_LH.npy",
+        "quality": {
+          "score": 83,
+          "movement_avg": 0.011709660972935576,
+          "stability": 0.9999981840158501,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022308",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022311_q82_LH.npy",
+        "quality": {
+          "score": 82,
+          "movement_avg": 0.012354556446756464,
+          "stability": 0.9999971801187043,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022311",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022315_q83_LH.npy",
+        "quality": {
+          "score": 83,
+          "movement_avg": 0.011768359512292152,
+          "stability": 0.9999962377880692,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022315",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022319_q87_LH.npy",
+        "quality": {
+          "score": 87,
+          "movement_avg": 0.008991022698156784,
+          "stability": 0.9999989384168967,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022319",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022322_q81_LH.npy",
+        "quality": {
+          "score": 81,
+          "movement_avg": 0.013403210357666557,
+          "stability": 0.9999964927092816,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022322",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022326_q79_LH.npy",
+        "quality": {
+          "score": 79,
+          "movement_avg": 0.014772206164177343,
+          "stability": 0.9999704794789106,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022326",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022330_q85_LH.npy",
+        "quality": {
+          "score": 85,
+          "movement_avg": 0.010629444770798586,
+          "stability": 0.9999983673775852,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022330",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022333_q84_LH.npy",
+        "quality": {
+          "score": 84,
+          "movement_avg": 0.010776865461719187,
+          "stability": 0.9999985201416977,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022333",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022336_q83_LH.npy",
+        "quality": {
+          "score": 83,
+          "movement_avg": 0.012076657161559371,
+          "stability": 0.9999972443073534,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022336",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022339_q86_LH.npy",
+        "quality": {
+          "score": 86,
+          "movement_avg": 0.009425199547162076,
+          "stability": 0.9999986340317906,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022339",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022343_q87_LH.npy",
+        "quality": {
+          "score": 87,
+          "movement_avg": 0.009095040936146282,
+          "stability": 0.9999988489116495,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022343",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022346_q86_LH.npy",
+        "quality": {
+          "score": 86,
+          "movement_avg": 0.009539667690844866,
+          "stability": 0.9999986541531115,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022346",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022349_q86_LH.npy",
+        "quality": {
+          "score": 86,
+          "movement_avg": 0.009380916332325955,
+          "stability": 0.9999989731900304,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022349",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022352_q86_LH.npy",
+        "quality": {
+          "score": 86,
+          "movement_avg": 0.009942230733124606,
+          "stability": 0.9999989023924424,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022352",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022355_q88_LH.npy",
+        "quality": {
+          "score": 88,
+          "movement_avg": 0.008297759617494477,
+          "stability": 0.9999989251600154,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022355",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022403_q85_LH.npy",
+        "quality": {
+          "score": 85,
+          "movement_avg": 0.010113351927433593,
+          "stability": 0.9999981896095126,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022403",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022406_q85_LH.npy",
+        "quality": {
+          "score": 85,
+          "movement_avg": 0.010228373455903439,
+          "stability": 0.9999988655308616,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022406",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022410_q84_LH.npy",
+        "quality": {
+          "score": 84,
+          "movement_avg": 0.011033438123152764,
+          "stability": 0.999996980175391,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022410",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022413_q85_LH.npy",
+        "quality": {
+          "score": 85,
+          "movement_avg": 0.010425031170894246,
+          "stability": 0.9999986005953746,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022413",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022417_q78_LH.npy",
+        "quality": {
+          "score": 78,
+          "movement_avg": 0.015415813022162682,
+          "stability": 0.9999963969455963,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022417",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022421_q79_LH.npy",
+        "quality": {
+          "score": 79,
+          "movement_avg": 0.014317192110527158,
+          "stability": 0.9999977360609014,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022421",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022424_q80_LH.npy",
+        "quality": {
+          "score": 80,
+          "movement_avg": 0.014274245753280186,
+          "stability": 0.9999975409306469,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022424",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022427_q82_LH.npy",
+        "quality": {
+          "score": 82,
+          "movement_avg": 0.012624819212423581,
+          "stability": 0.9999981487566746,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022427",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022430_q81_LH.npy",
+        "quality": {
+          "score": 81,
+          "movement_avg": 0.013131011060135735,
+          "stability": 0.999996307477044,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022430",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022433_q82_LH.npy",
+        "quality": {
+          "score": 82,
+          "movement_avg": 0.01228073181767727,
+          "stability": 0.9999982138968004,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022433",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022436_q82_LH.npy",
+        "quality": {
+          "score": 82,
+          "movement_avg": 0.012400771703414951,
+          "stability": 0.9999978733695931,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022436",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022439_q83_LH.npy",
+        "quality": {
+          "score": 83,
+          "movement_avg": 0.011550199041099843,
+          "stability": 0.9999977162624555,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022439",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022442_q81_LH.npy",
+        "quality": {
+          "score": 81,
+          "movement_avg": 0.01287985789998705,
+          "stability": 0.999997790528021,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022442",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022446_q83_LH.npy",
+        "quality": {
+          "score": 83,
+          "movement_avg": 0.011787668179512807,
+          "stability": 0.9999979725440088,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022446",
+        "type": "static"
+      },
+      {
+        "filename": "20250711_022449_q82_LH.npy",
+        "quality": {
+          "score": 82,
+          "movement_avg": 0.01283504964819063,
+          "stability": 0.9999978331394982,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022449",
+        "type": "static"
+      }
+    ]
+  },
+  "quality_metrics": [
+    {
+      "score": 83,
+      "movement_avg": 0.011709660972935576,
+      "stability": 0.9999981840158501,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 82,
+      "movement_avg": 0.012354556446756464,
+      "stability": 0.9999971801187043,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 83,
+      "movement_avg": 0.011768359512292152,
+      "stability": 0.9999962377880692,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 87,
+      "movement_avg": 0.008991022698156784,
+      "stability": 0.9999989384168967,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 81,
+      "movement_avg": 0.013403210357666557,
+      "stability": 0.9999964927092816,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 79,
+      "movement_avg": 0.014772206164177343,
+      "stability": 0.9999704794789106,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 85,
+      "movement_avg": 0.010629444770798586,
+      "stability": 0.9999983673775852,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 84,
+      "movement_avg": 0.010776865461719187,
+      "stability": 0.9999985201416977,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 83,
+      "movement_avg": 0.012076657161559371,
+      "stability": 0.9999972443073534,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 86,
+      "movement_avg": 0.009425199547162076,
+      "stability": 0.9999986340317906,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 87,
+      "movement_avg": 0.009095040936146282,
+      "stability": 0.9999988489116495,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 86,
+      "movement_avg": 0.009539667690844866,
+      "stability": 0.9999986541531115,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 86,
+      "movement_avg": 0.009380916332325955,
+      "stability": 0.9999989731900304,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 86,
+      "movement_avg": 0.009942230733124606,
+      "stability": 0.9999989023924424,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 88,
+      "movement_avg": 0.008297759617494477,
+      "stability": 0.9999989251600154,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 85,
+      "movement_avg": 0.010113351927433593,
+      "stability": 0.9999981896095126,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 85,
+      "movement_avg": 0.010228373455903439,
+      "stability": 0.9999988655308616,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 84,
+      "movement_avg": 0.011033438123152764,
+      "stability": 0.999996980175391,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 85,
+      "movement_avg": 0.010425031170894246,
+      "stability": 0.9999986005953746,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 78,
+      "movement_avg": 0.015415813022162682,
+      "stability": 0.9999963969455963,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 79,
+      "movement_avg": 0.014317192110527158,
+      "stability": 0.9999977360609014,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 80,
+      "movement_avg": 0.014274245753280186,
+      "stability": 0.9999975409306469,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 82,
+      "movement_avg": 0.012624819212423581,
+      "stability": 0.9999981487566746,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 81,
+      "movement_avg": 0.013131011060135735,
+      "stability": 0.999996307477044,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 82,
+      "movement_avg": 0.01228073181767727,
+      "stability": 0.9999982138968004,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 82,
+      "movement_avg": 0.012400771703414951,
+      "stability": 0.9999978733695931,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 83,
+      "movement_avg": 0.011550199041099843,
+      "stability": 0.9999977162624555,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 81,
+      "movement_avg": 0.01287985789998705,
+      "stability": 0.999997790528021,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 83,
+      "movement_avg": 0.011787668179512807,
+      "stability": 0.9999979725440088,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 82,
+      "movement_avg": 0.01283504964819063,
+      "stability": 0.9999978331394982,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    }
+  ],
+  "end_time": "2025-07-11T02:24:52.182655",
+  "quality_summary": {
+    "avg_score": 83.26666666666667,
+    "min_score": 78,
+    "max_score": 88,
+    "excellent_count": 27,
+    "good_count": 3,
+    "regular_count": 0,
+    "poor_count": 0
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "start_time": "2025-07-11T02:26:08.222989",
+  "collected_signs": {
+    "J": [
+      {
+        "filename": "20250711_022653_q80_LH.npy",
+        "quality": {
+          "score": 80,
+          "movement_avg": 0.05431490984020838,
+          "stability": 0.9993530175897296,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 2,
+            "left_frames": 58,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 3.3333333333333335,
+            "left_percentage": 96.66666666666667,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022653",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022659_q64_LH.npy",
+        "quality": {
+          "score": 64,
+          "movement_avg": 0.0328150336412841,
+          "stability": 0.9996333455013227,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022659",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022704_q79_LH.npy",
+        "quality": {
+          "score": 79,
+          "movement_avg": 0.05324934290781417,
+          "stability": 0.998957575784086,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022704",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022708_q66_LH.npy",
+        "quality": {
+          "score": 66,
+          "movement_avg": 0.0352078484127388,
+          "stability": 0.9995000215372408,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "left",
+          "usage_stats": {
+            "right_frames": 0,
+            "left_frames": 60,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 0.0,
+            "left_percentage": 100.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022708",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022713_q68_RH.npy",
+        "quality": {
+          "score": 68,
+          "movement_avg": 0.03816326435577716,
+          "stability": 0.9994406187524989,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022713",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022718_q77_RH.npy",
+        "quality": {
+          "score": 77,
+          "movement_avg": 0.049949432747056294,
+          "stability": 0.9993017742318848,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022718",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022723_q82_RH.npy",
+        "quality": {
+          "score": 82,
+          "movement_avg": 0.05608486908012486,
+          "stability": 0.9993917850599644,
+          "coverage": 1.0,
+          "quality_level": "EXCELENTE"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022723",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022727_q73_RH.npy",
+        "quality": {
+          "score": 73,
+          "movement_avg": 0.044569845981332054,
+          "stability": 0.9991316346232358,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022727",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022731_q72_RH.npy",
+        "quality": {
+          "score": 72,
+          "movement_avg": 0.042887436649025584,
+          "stability": 0.999273137370298,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022731",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022735_q73_RH.npy",
+        "quality": {
+          "score": 73,
+          "movement_avg": 0.0441430869260755,
+          "stability": 0.9991731537208137,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022735",
+        "type": "dynamic"
+      },
+      {
+        "filename": "20250711_022739_q71_RH.npy",
+        "quality": {
+          "score": 71,
+          "movement_avg": 0.04234623044085295,
+          "stability": 0.9993520098159528,
+          "coverage": 1.0,
+          "quality_level": "BUENA"
+        },
+        "handedness": {
+          "dominant_hand": "right",
+          "usage_stats": {
+            "right_frames": 60,
+            "left_frames": 0,
+            "both_frames": 0,
+            "total_frames": 60,
+            "right_percentage": 100.0,
+            "left_percentage": 0.0,
+            "both_percentage": 0.0
+          }
+        },
+        "timestamp": "20250711_022739",
+        "type": "dynamic"
+      }
+    ]
+  },
+  "quality_metrics": [
+    {
+      "score": 80,
+      "movement_avg": 0.05431490984020838,
+      "stability": 0.9993530175897296,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 64,
+      "movement_avg": 0.0328150336412841,
+      "stability": 0.9996333455013227,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 79,
+      "movement_avg": 0.05324934290781417,
+      "stability": 0.998957575784086,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 66,
+      "movement_avg": 0.0352078484127388,
+      "stability": 0.9995000215372408,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 68,
+      "movement_avg": 0.03816326435577716,
+      "stability": 0.9994406187524989,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 77,
+      "movement_avg": 0.049949432747056294,
+      "stability": 0.9993017742318848,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 82,
+      "movement_avg": 0.05608486908012486,
+      "stability": 0.9993917850599644,
+      "coverage": 1.0,
+      "quality_level": "EXCELENTE"
+    },
+    {
+      "score": 73,
+      "movement_avg": 0.044569845981332054,
+      "stability": 0.9991316346232358,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 72,
+      "movement_avg": 0.042887436649025584,
+      "stability": 0.999273137370298,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 73,
+      "movement_avg": 0.0441430869260755,
+      "stability": 0.9991731537208137,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    },
+    {
+      "score": 71,
+      "movement_avg": 0.04234623044085295,
+      "stability": 0.9993520098159528,
+      "coverage": 1.0,
+      "quality_level": "BUENA"
+    }
+  ],
+  "end_time": "2025-07-11T02:27:44.305477",
+  "quality_summary": {
+    "avg_score": 73.18181818181819,
+    "min_score": 64,
+    "max_score": 82,
+    "excellent_count": 2,
+    "good_count": 9,
+    "regular_count": 0,
+    "poor_count": 0
+  }
+}
