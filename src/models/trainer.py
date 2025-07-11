@@ -210,7 +210,8 @@ class EnhancedSequenceModelTrainer:
         print(f"📊 Características combinadas: {combined_features.shape}")
         
         # Guardar codificador
-        np.save('data/label_encoder.npy', self.label_encoder.classes_)
+        os.makedirs('models', exist_ok=True)
+        np.save('models/label_encoder.npy', self.label_encoder.classes_)
         
         return X_augmented, combined_features, y
 
@@ -434,8 +435,8 @@ class EnhancedSequenceModelTrainer:
                         sign_accuracy = np.mean(predicted_classes[sign_mask] == sign_idx)
                         print(f"   Precisión para '{sign}' (dinámica): {sign_accuracy:.3f}")
             
-            model.save('data/sign_model_bidirectional_dynamic.h5')
-            print(f"\n✅ Modelo bidireccional guardado como 'data/sign_model_bidirectional_dynamic.h5'")
+            model.save('models/sign_model_bidirectional_dynamic.keras')
+            print(f"\n✅ Modelo bidireccional guardado como 'models/sign_model_bidirectional_dynamic.keras'")
             
         elif self.model_type == 'hybrid':
             # Código del modelo híbrido original
@@ -475,8 +476,8 @@ class EnhancedSequenceModelTrainer:
             test_loss, test_accuracy = model.evaluate([X_seq_test, X_motion_test], y_test, verbose=0)
             print(f"\n📈 Precisión en datos de prueba: {test_accuracy:.3f}")
             
-            model.save('data/sign_model_hybrid.h5')
-            print(f"\n✅ Modelo híbrido guardado como 'data/sign_model_hybrid.h5'")
+            model.save('models/sign_model_hybrid.keras')
+            print(f"\n✅ Modelo híbrido guardado como 'models/sign_model_hybrid.keras'")
             
         else:
             # Entrenamiento estándar mejorado
@@ -498,8 +499,8 @@ class EnhancedSequenceModelTrainer:
             test_loss, test_accuracy = model.evaluate(X_test, y_test, verbose=0)
             print(f"\n📈 Precisión en datos de prueba: {test_accuracy:.3f}")
             
-            model.save(f'data/sign_model_{self.model_type}_enhanced.h5')
-            print(f"\nModelo guardado como 'data/sign_model_{self.model_type}_enhanced.h5'")
+            model.save(f'models/sign_model_{self.model_type}_enhanced.keras')
+            print(f"\nModelo guardado como 'models/sign_model_{self.model_type}_enhanced.keras'")
         
         return model, history
 
@@ -519,7 +520,7 @@ class EnhancedSequenceModelTrainer:
         X = pad_sequences(sequences, maxlen=self.sequence_length, padding='post', truncating='post', dtype='float32')
         y = to_categorical(labels).astype(int)
         
-        np.save('data/label_encoder.npy', self.label_encoder.classes_)
+        np.save('models/label_encoder.npy', self.label_encoder.classes_)
         
         return X, y
 

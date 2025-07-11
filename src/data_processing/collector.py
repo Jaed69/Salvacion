@@ -617,6 +617,490 @@ class EnhancedDataCollector:
         print("\n✅ Sesión de recolección finalizada")
         print(f"📊 Total recolectado: {self.sequence_count} secuencias")
 
+    def determine_sign_type(self, sign):
+        """Determina el tipo de seña basado en su nombre"""
+        # Lista de señas estáticas conocidas
+        static_signs = [
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'HOLA', 'GRACIAS', 'POR_FAVOR', 'DISCULPE'
+        ]
+        
+        if sign.upper() in static_signs:
+            return "Estática"
+        else:
+            return "Dinámica"
+
+    def calculate_sequence_quality(self, sequence_data):
+        """Calcula la calidad de una secuencia basada en varios factores"""
+        if len(sequence_data) == 0:
+            return 0.0
+        
+        try:
+            # Factor 1: Completitud de la secuencia
+            completeness = min(len(sequence_data) / self.sequence_length, 1.0)
+            
+            # Factor 2: Consistencia de detección (porcentaje de frames con landmarks válidos)
+            valid_frames = sum(1 for frame in sequence_data if np.any(frame))
+            consistency = valid_frames / len(sequence_data)
+            
+            # Factor 3: Estabilidad (variación en las posiciones)
+            if valid_frames > 1:
+                # Calcular variación promedio entre frames consecutivos
+                variations = []
+                for i in range(1, len(sequence_data)):
+                    if np.any(sequence_data[i]) and np.any(sequence_data[i-1]):
+                        diff = np.mean(np.abs(sequence_data[i] - sequence_data[i-1]))
+                        variations.append(diff)
+                
+                if variations:
+                    avg_variation = np.mean(variations)
+                    # Normalizar la estabilidad (menos variación = mayor calidad)
+                    stability = max(0, 1 - (avg_variation / 0.1))  # 0.1 es un umbral ajustable
+                else:
+                    stability = 0.5
+            else:
+                stability = 0.5
+            
+            # Combinar factores con pesos
+            quality = (completeness * 0.4 + consistency * 0.4 + stability * 0.2) * 100
+            return min(quality, 100.0)
+            
+        except Exception as e:
+            print(f"Error calculando calidad: {e}")
+            return 50.0  # Calidad por defecto en caso de error
+
+    def determine_predominant_handedness(self):
+        """Determina la mano predominante en la secuencia actual"""
+        if not self.current_frame_handedness:
+            return "unknown"
+        
+        # Contar ocurrencias de cada mano
+        left_count = self.current_frame_handedness.count('Left')
+        right_count = self.current_frame_handedness.count('Right')
+        
+        if left_count > right_count:
+            return "left"
+        elif right_count > left_count:
+            return "right"
+        else:
+            return "both"
+
+    def collect_data_for_sign_with_progress(self, sign, num_samples, output_dir="data/sequences"):
+        """
+        Método específico para recolectar datos por lotes con indicador de progreso
+        """
+        self.current_sign = sign.upper()
+        self.sign_type = self.determine_sign_type(self.current_sign)
+        
+        # Configurar directorio de salida
+        output_path = os.path.join(output_dir, self.current_sign)
+        os.makedirs(output_path, exist_ok=True)
+        
+        collected_samples = 0
+        samples_this_session = 0
+        
+        print(f"\n🎯 RECOLECTANDO: {self.current_sign} ({self.sign_type})")
+        print(f"📊 Meta: {num_samples} muestras")
+        print("=" * 50)
+        print("📝 Instrucciones:")
+        print("   ESPACIO: Iniciar/Parar grabación")
+        print("   Q: Terminar recolección")
+        print("   R: Reiniciar muestra actual")
+        print("=" * 50)
+        
+        while collected_samples < num_samples:
+            ret, frame = self.cap.read()
+            if not ret:
+                break
+            
+            # Voltear frame
+            frame = cv2.flip(frame, 1)
+            
+            # Procesar con MediaPipe
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = self.hands.process(rgb_frame)
+            
+            # Extraer landmarks si hay manos detectadas
+            if results.multi_hand_landmarks:
+                # Dibujar landmarks
+                for hand_landmarks in results.multi_hand_landmarks:
+                    self.mp_draw.draw_landmarks(frame, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
+                
+                # Si está grabando, agregar al buffer
+                if self.recording:
+                    landmarks_frame = self.extract_landmarks_with_handedness(results)
+                    if landmarks_frame is not None:
+                        self.frame_buffer.append(landmarks_frame)
+                        
+                        # Verificar si el buffer está completo
+                        if len(self.frame_buffer) >= self.sequence_length:
+                            self.recording = False
+                            print(f"✅ Buffer completo ({self.sequence_length} frames)")
+                            
+                            # Guardar secuencia automáticamente
+                            success = self.save_sequence_to_path(output_path)
+                            if success:
+                                collected_samples += 1
+                                samples_this_session += 1
+                                print(f"✅ Muestra {collected_samples}/{num_samples} guardada automáticamente")
+                                
+                                # Mostrar progreso cada 5 muestras
+                                if collected_samples % 5 == 0:
+                                    progress_percent = (collected_samples / num_samples) * 100
+                                    print(f"📈 Progreso: {progress_percent:.1f}% ({collected_samples}/{num_samples})")
+                            else:
+                                print("❌ Error al guardar muestra")
+                            
+                            # Limpiar buffer para siguiente secuencia
+                            self.frame_buffer = []
+                            self.current_frame_handedness = []
+                            print("🔄 Listo para siguiente secuencia")
+            
+            # Dibujar UI con progreso avanzado
+            frame = self.draw_progress_ui(frame, collected_samples, num_samples, samples_this_session)
+            
+            # Mostrar frame
+            cv2.imshow('Recolector LSP Esperanza - Modo Lote', frame)
+            
+            # Manejar teclas
+            key = cv2.waitKey(1) & 0xFF
+            
+            if key == ord(' '):
+                # Alternar grabación
+                if not self.recording:
+                    self.recording = True
+                    self.frame_buffer = []
+                    self.current_frame_handedness = []
+                    print(f"🔴 Grabando muestra {collected_samples + 1}/{num_samples}...")
+                else:
+                    self.recording = False
+                    if len(self.frame_buffer) >= self.sequence_length:
+                        # Guardar secuencia
+                        success = self.save_sequence_to_path(output_path)
+                        if success:
+                            collected_samples += 1
+                            samples_this_session += 1
+                            print(f"✅ Muestra {collected_samples}/{num_samples} guardada")
+                            
+                            # Mostrar progreso cada 5 muestras
+                            if collected_samples % 5 == 0:
+                                progress_percent = (collected_samples / num_samples) * 100
+                                print(f"📈 Progreso: {progress_percent:.1f}% ({collected_samples}/{num_samples})")
+                        else:
+                            print("❌ Error al guardar muestra")
+                    else:
+                        print(f"⚠️  Secuencia muy corta: {len(self.frame_buffer)}/{self.sequence_length} frames")
+                    
+                    self.frame_buffer = []
+                    self.current_frame_handedness = []
+            
+            elif key == ord('r'):
+                # Reiniciar muestra actual
+                if self.recording:
+                    self.frame_buffer = []
+                    self.current_frame_handedness = []
+                    print("🔄 Muestra reiniciada")
+            
+            elif key == ord('q'):
+                print(f"\n⏹️  Recolección detenida por el usuario")
+                print(f"📊 Recolectadas: {collected_samples}/{num_samples} muestras")
+                break
+        
+        # Limpiar recursos
+        cv2.destroyAllWindows()
+        
+        if collected_samples >= num_samples:
+            print(f"\n🎉 ¡RECOLECCIÓN COMPLETADA!")
+            print(f"✅ {collected_samples} muestras recolectadas exitosamente")
+        
+        return collected_samples
+
+    def draw_progress_ui(self, frame, current, target, session_count):
+        """Dibuja UI avanzada con indicadores de progreso y calidad"""
+        height, width = frame.shape[:2]
+        
+        # Panel principal expandido
+        panel_height = 180
+        panel = np.zeros((panel_height, width, 3), dtype=np.uint8)
+        panel[:] = (30, 30, 30)  # Fondo gris oscuro
+        
+        # Borde del panel
+        cv2.rectangle(panel, (0, 0), (width-1, panel_height-1), (100, 100, 100), 2)
+        
+        # === SECCIÓN SUPERIOR: INFORMACIÓN DE LA SEÑA ===
+        # Título principal
+        cv2.putText(panel, f"RECOLECTANDO: {self.current_sign}", (15, 25), 
+                   cv2.FONT_HERSHEY_DUPLEX, 0.9, (255, 255, 255), 2)
+        
+        # Tipo de seña con color
+        sign_type_color = (100, 255, 100) if self.sign_type == "Estática" else (255, 150, 100)
+        cv2.putText(panel, f"TIPO: {self.sign_type.upper()}", (15, 50), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.7, sign_type_color, 2)
+        
+        # === SECCIÓN PROGRESO GENERAL ===
+        progress = (current / target) * 100 if target > 0 else 0
+        progress_text = f"PROGRESO: {current}/{target} ({progress:.1f}%)"
+        cv2.putText(panel, progress_text, (15, 75), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 255), 2)
+        
+        # Barra de progreso principal
+        bar_width = width - 300
+        bar_height = 25
+        bar_x, bar_y = 15, 85
+        
+        # Fondo de la barra con borde
+        cv2.rectangle(panel, (bar_x-1, bar_y-1), (bar_x + bar_width+1, bar_y + bar_height+1), (150, 150, 150), 1)
+        cv2.rectangle(panel, (bar_x, bar_y), (bar_x + bar_width, bar_y + bar_height), (60, 60, 60), -1)
+        
+        # Relleno de progreso
+        if target > 0:
+            fill_width = int((current / target) * bar_width)
+            # Gradiente de color según progreso
+            if progress < 25:
+                color = (0, 100, 255)  # Azul - inicio
+            elif progress < 50:
+                color = (0, 200, 255)  # Cyan
+            elif progress < 75:
+                color = (100, 255, 100)  # Verde
+            else:
+                color = (100, 255, 255)  # Amarillo - casi completo
+            
+            cv2.rectangle(panel, (bar_x, bar_y), (bar_x + fill_width, bar_y + bar_height), color, -1)
+            
+            # Marcadores cada 25%
+            for i in range(1, 4):
+                marker_x = bar_x + int((i * 0.25) * bar_width)
+                cv2.line(panel, (marker_x, bar_y), (marker_x, bar_y + bar_height), (200, 200, 200), 1)
+        
+        # === SECCIÓN ESTADO DE GRABACIÓN ===
+        status_y = 120
+        
+        # Estado principal
+        if self.recording:
+            # Indicador de grabación parpadeante
+            blink = int(time.time() * 3) % 2
+            record_color = (0, 0, 255) if blink else (100, 100, 255)
+            status_text = "🔴 GRABANDO"
+            cv2.circle(panel, (width - 50, status_y - 5), 8, record_color, -1)
+        else:
+            # Verificar si acabamos de completar una secuencia
+            if len(self.frame_buffer) == 0 and session_count > 0:
+                status_text = "✅ SECUENCIA COMPLETADA"
+                record_color = (0, 255, 0)
+            else:
+                status_text = "⚪ LISTO"
+                record_color = (255, 255, 255)
+        
+        cv2.putText(panel, status_text, (15, status_y), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.6, record_color, 2)
+        
+        # === BARRA DE BUFFER (PROGRESO DE SECUENCIA ACTUAL) ===
+        buffer_progress = len(self.frame_buffer) / self.sequence_length if self.sequence_length > 0 else 0
+        buffer_bar_width = 200
+        buffer_bar_height = 15
+        buffer_bar_x = width - 250
+        buffer_bar_y = status_y + 10
+        
+        # Fondo del buffer
+        cv2.rectangle(panel, (buffer_bar_x, buffer_bar_y), 
+                     (buffer_bar_x + buffer_bar_width, buffer_bar_y + buffer_bar_height), (80, 80, 80), -1)
+        
+        # Progreso del buffer
+        if self.recording:
+            buffer_fill_width = int(buffer_progress * buffer_bar_width)
+            # Color según completitud
+            if buffer_progress < 0.5:
+                buffer_color = (0, 150, 255)  # Azul - llenando
+            elif buffer_progress < 0.8:
+                buffer_color = (0, 255, 150)  # Verde - casi listo
+            else:
+                buffer_color = (0, 255, 255)  # Amarillo - completo
+            
+            cv2.rectangle(panel, (buffer_bar_x, buffer_bar_y), 
+                         (buffer_bar_x + buffer_fill_width, buffer_bar_y + buffer_bar_height), buffer_color, -1)
+        elif len(self.frame_buffer) == 0 and session_count > 0:
+            # Mostrar barra verde cuando se completó una secuencia
+            cv2.rectangle(panel, (buffer_bar_x, buffer_bar_y), 
+                         (buffer_bar_x + buffer_bar_width, buffer_bar_y + buffer_bar_height), (0, 255, 0), -1)
+        
+        # Texto del buffer
+        if self.recording:
+            buffer_text = f"Buffer: {len(self.frame_buffer)}/{self.sequence_length}"
+        elif len(self.frame_buffer) == 0 and session_count > 0:
+            buffer_text = "Secuencia completada - ESPACIO para siguiente"
+        else:
+            buffer_text = f"Buffer: {len(self.frame_buffer)}/{self.sequence_length}"
+        
+        cv2.putText(panel, buffer_text, (buffer_bar_x, buffer_bar_y - 5), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.4, (200, 200, 200), 1)
+        
+        # === INDICADOR DE CALIDAD EN TIEMPO REAL ===
+        if self.recording and len(self.frame_buffer) > 10:
+            # Calcular calidad preliminar
+            recent_quality = self.calculate_realtime_quality()
+            quality_color = (0, 255, 0) if recent_quality > 70 else (0, 255, 255) if recent_quality > 50 else (0, 100, 255)
+            
+            cv2.putText(panel, f"Calidad: {recent_quality:.0f}%", (width - 120, status_y), 
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, quality_color, 2)
+        
+        # === INFORMACIÓN DE LATERALIDAD ===
+        if self.recording and self.current_frame_handedness:
+            hands_detected = self.current_frame_handedness[-1] if self.current_frame_handedness else {'right': False, 'left': False}
+            hand_indicators = []
+            
+            if hands_detected.get('right', False):
+                hand_indicators.append("🤚D")  # Derecha
+            if hands_detected.get('left', False):
+                hand_indicators.append("🤚I")   # Izquierda
+            
+            if hand_indicators:
+                hands_text = " ".join(hand_indicators)
+                cv2.putText(panel, hands_text, (width - 150, 25), 
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+        
+        # === INSTRUCCIONES RÁPIDAS ===
+        instructions = [
+            "ESPACIO: Grabar",
+            "Q: Salir",
+            "R: Reiniciar"
+        ]
+        
+        for i, instruction in enumerate(instructions):
+            cv2.putText(panel, instruction, (width - 200, 50 + i * 20), 
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.4, (180, 180, 180), 1)
+        
+        # === ESTADÍSTICAS DE SESIÓN ===
+        if session_count > 0:
+            session_text = f"Sesión: {session_count} muestras"
+            cv2.putText(panel, session_text, (15, 145), 
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (150, 150, 255), 1)
+        
+        # === INFORMACIÓN DE LOTE ACTUAL ===
+        current_batch = (current // 20) + 1 if current > 0 else 1
+        samples_in_batch = current % 20
+        batch_text = f"Lote {current_batch} - Muestra {samples_in_batch + 1}/20"
+        cv2.putText(panel, batch_text, (15, 160), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 200, 100), 1)
+        
+        # Combinar panel con frame original
+        combined_frame = np.vstack([panel, frame])
+        
+        return combined_frame
+
+    def calculate_realtime_quality(self):
+        """Calcula calidad en tiempo real durante la grabación"""
+        if len(self.frame_buffer) < 5:
+            return 0.0
+        
+        try:
+            # Tomar últimos 10 frames para análisis rápido
+            recent_frames = self.frame_buffer[-10:]
+            
+            # Factor 1: Consistencia de detección
+            valid_frames = sum(1 for frame in recent_frames if np.any(frame))
+            consistency = (valid_frames / len(recent_frames)) * 100
+            
+            # Factor 2: Estabilidad del movimiento
+            if len(recent_frames) > 1:
+                movements = []
+                for i in range(1, len(recent_frames)):
+                    if np.any(recent_frames[i]) and np.any(recent_frames[i-1]):
+                        movement = np.mean(np.abs(np.array(recent_frames[i]) - np.array(recent_frames[i-1])))
+                        movements.append(movement)
+                
+                if movements:
+                    avg_movement = np.mean(movements)
+                    # Para señas estáticas: penalizar mucho movimiento
+                    # Para señas dinámicas: penalizar poco movimiento
+                    if self.sign_type == "Estática":
+                        movement_quality = max(0, 100 - (avg_movement * 1000))
+                    else:
+                        movement_quality = min(100, avg_movement * 500)
+                else:
+                    movement_quality = 50
+            else:
+                movement_quality = 50
+            
+            # Combinar factores
+            overall_quality = (consistency * 0.7 + movement_quality * 0.3)
+            return max(0, min(100, overall_quality))
+            
+        except Exception as e:
+            return 50.0
+
+    def save_sequence_to_path(self, output_path):
+        """Guarda la secuencia en la ruta especificada con análisis de calidad completo"""
+        try:
+            # Preparar datos de la secuencia
+            sequence_data = np.array(self.frame_buffer)
+            
+            # Análisis completo de calidad
+            quality_score = self.calculate_sequence_quality(sequence_data)
+            
+            # Análisis de lateralidad
+            handedness_analysis = self.analyze_sequence_handedness()
+            
+            # Análisis de movimiento específico por tipo
+            movement_quality = self.evaluate_sequence_quality(self.frame_buffer, self.sign_type.lower().replace("ática", "atic").replace("ámica", "amic"))
+            
+            # Generar nombre de archivo descriptivo
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            quality_str = f"q{int(quality_score)}"
+            
+            # Determinar lateralidad predominante
+            handedness = self.get_handedness_suffix(handedness_analysis)
+            
+            # Nivel de calidad para el nombre
+            quality_level = movement_quality['quality_level'].lower()[:3]  # exc, bue, reg, mal
+            
+            filename = f"{timestamp}_{quality_str}_{quality_level}_{handedness}.npy"
+            filepath = os.path.join(output_path, filename)
+            
+            # Guardar archivo
+            np.save(filepath, sequence_data)
+            
+            # Actualizar métricas de sesión
+            self.sequence_count += 1
+            
+            # Información detallada para estadísticas
+            sequence_info = {
+                'sequence': self.sequence_count,
+                'quality_score': quality_score,
+                'movement_quality': movement_quality,
+                'handedness_analysis': handedness_analysis,
+                'timestamp': timestamp,
+                'sign': self.current_sign,
+                'sign_type': self.sign_type,
+                'filename': filename,
+                'sequence_length': len(sequence_data)
+            }
+            
+            self.session_data['quality_metrics'].append(sequence_info)
+            
+            if self.current_sign not in self.session_data['collected_signs']:
+                self.session_data['collected_signs'][self.current_sign] = 0
+            self.session_data['collected_signs'][self.current_sign] += 1
+            
+            # Mostrar información detallada
+            print(f"✅ Secuencia guardada: {filename}")
+            print(f"📊 Calidad general: {quality_score:.1f}/100")
+            print(f"🎯 Calidad por tipo: {movement_quality['quality_level']} ({movement_quality['score']}/100)")
+            print(f"📈 Movimiento promedio: {movement_quality['movement_avg']:.4f}")
+            print(f"🤲 Lateralidad: {handedness_analysis['dominant_hand']} " +
+                  f"(D:{handedness_analysis['usage_stats']['right_percentage']:.1f}% " +
+                  f"I:{handedness_analysis['usage_stats']['left_percentage']:.1f}%)")
+            
+            return True
+            
+        except Exception as e:
+            print(f"❌ Error al guardar secuencia: {e}")
+            return False
+
+# Alias para compatibilidad con el script de recolección
+DataCollector = EnhancedDataCollector
+
 if __name__ == "__main__":
     collector = EnhancedDataCollector()
     collector.run()

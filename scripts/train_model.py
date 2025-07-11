@@ -9,7 +9,8 @@ import argparse
 from pathlib import Path
 
 # Agregar el directorio src al path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root / "src"))
 
 def main():
     parser = argparse.ArgumentParser(
@@ -55,14 +56,13 @@ def main():
     print("=" * 50)
     
     try:
-        from models.trainer import EnhancedModelTrainer
+        from models.trainer import EnhancedSequenceModelTrainer
         
-        trainer = EnhancedModelTrainer(data_path=args.data_path)
+        trainer = EnhancedSequenceModelTrainer(data_path=args.data_path)
         
         if args.model_type == 'bidirectional_dynamic':
-            trainer.train_bidirectional_dynamic_model(
-                epochs=args.epochs,
-                batch_size=args.batch_size
+            trainer.train_enhanced(
+                epochs=args.epochs
             )
         else:
             print(f"❌ Tipo de modelo '{args.model_type}' no implementado aún")
