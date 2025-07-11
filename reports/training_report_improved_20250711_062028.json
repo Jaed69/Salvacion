@@ -1,0 +1,62 @@
+{
+  "timestamp": "20250711_062028",
+  "config": {
+    "use_single_frame": true,
+    "geometric_features": true,
+    "advanced_augmentation": true,
+    "stability_check": true,
+    "confidence_threshold": 0.75,
+    "normalization": "robust",
+    "architecture": "attention_mlp",
+    "class_balancing": true,
+    "ensemble_training": true,
+    "cross_validation": true,
+    "dropout_rate": 0.3,
+    "l1_l2_reg": [
+      1e-05,
+      0.0001
+    ],
+    "learning_rate": 0.001,
+    "batch_size": 32,
+    "epochs": 150,
+    "patience": 20
+  },
+  "final_accuracy": 0.9997395833333333,
+  "classification_report": "              precision    recall  f1-score   support\n\n           A       1.00      1.00      1.00       160\n           B       1.00      1.00      1.00       160\n           C       1.00      1.00      1.00       160\n           D       1.00      1.00      1.00       160\n           E       1.00      1.00      1.00       160\n           F       1.00      1.00      1.00       160\n           G       1.00      1.00      1.00       160\n           H       1.00      1.00      1.00       160\n           I       1.00      1.00      1.00       160\n           K       1.00      1.00      1.00       160\n           L       1.00      1.00      1.00       160\n           M       1.00      1.00      1.00       160\n           N       1.00      1.00      1.00       160\n           O       1.00      1.00      1.00       160\n           P       1.00      0.99      1.00       160\n           Q       0.99      1.00      1.00       160\n           R       1.00      1.00      1.00       160\n           S       1.00      1.00      1.00       160\n           T       1.00      1.00      1.00       160\n           U       1.00      1.00      1.00       160\n           V       1.00      1.00      1.00       160\n           W       1.00      1.00      1.00       160\n           X       1.00      1.00      1.00       160\n           Y       1.00      1.00      1.00       160\n\n    accuracy                           1.00      3840\n   macro avg       1.00      1.00      1.00      3840\nweighted avg       1.00      1.00      1.00      3840\n",
+  "cv_scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "num_classes": 24,
+  "classes": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y"
+  ],
+  "total_samples": 3840,
+  "augmentation_factor": 8
+}
