@@ -12,17 +12,24 @@ from datetime import datetime
 from tensorflow.keras.models import load_model
 from scipy.spatial.distance import euclidean
 import statistics
+from sklearn.preprocessing import RobustScaler
 
 class BidirectionalRealTimeTranslator:
-    def __init__(self, model_path='models/sign_model_bidirectional_dynamic.h5', signs_path='models/label_encoder.npy'):
+    def __init__(self, model_path='models/sign_model_j_specialized.keras', signs_path='models/label_encoder_j_specialized.npy'):
         """
-        Traductor con modelo bidireccional para señas estáticas y dinámicas
+        Traductor con modelo especializado para reconocimiento mejorado de J
         """
-        # Verificar que el modelo existe
+        # Verificar que el modelo especializado existe, si no, usar el modelo original
+        if not os.path.exists(model_path):
+            print(f"⚠️ Modelo especializado no encontrado: {model_path}")
+            model_path = 'models/sign_model_bidirectional_dynamic.h5'
+            signs_path = 'models/label_encoder.npy'
+            print(f"🔄 Usando modelo original: {model_path}")
+            
         if not os.path.exists(model_path):
             print(f"❌ Modelo no encontrado en: {model_path}")
             print("💡 Entrena primero el modelo con:")
-            print("   python scripts/train_model.py --model-type bidirectional_dynamic")
+            print("   python fix_j_recognition.py")
             raise FileNotFoundError(f"Modelo no encontrado: {model_path}")
         
         # Verificar que el archivo de labels existe
@@ -35,19 +42,29 @@ class BidirectionalRealTimeTranslator:
         self.signs = np.load(signs_path)
         self.sequence_length = 50
         self.sequence_buffer = deque(maxlen=self.sequence_length)
-        self.prediction_threshold = 0.8  # Umbral más alto para mayor precisión
+        
+        # Umbrales específicos por letra (MEJORA CLAVE PARA J)
+        self.confidence_thresholds = {
+            'J': 0.3,      # Umbral más bajo para J
+            'A': 0.7,      # Umbral normal para A
+            'B': 0.7,      # Umbral normal para B
+            'default': 0.8  # Umbral por defecto
+        }
         
         # Configuración específica para señas estáticas vs dinámicas
         self.static_signs = {'I', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'}
         self.dynamic_signs = {'J', 'Z', 'HOLA', 'GRACIAS', 'POR FAVOR'}  # J requiere movimiento
         
-        # Buffer para análisis de movimiento
+        # Buffer para análisis de movimiento mejorado
         self.movement_buffer = deque(maxlen=20)  # Últimos 20 frames para detectar movimiento
         self.stability_buffer = deque(maxlen=15)  # Buffer para detectar estabilidad
         self.movement_threshold = 0.02  # Umbral para detectar movimiento significativo
         
         # Configuración visual mejorada
         self.prediction_history = deque(maxlen=8)
+        
+        # NUEVA: Configuración para normalización específica de J
+        self.scaler = RobustScaler()
         self.confidence_history = deque(maxlen=8)
         self.movement_history = deque(maxlen=8)
         self.last_prediction_time = time.time()
@@ -246,11 +263,13 @@ class BidirectionalRealTimeTranslator:
         """
         Determina si se debe predecir una seña estática basado en el análisis de movimiento
         """
+        threshold = self.confidence_thresholds.get(predicted_sign, self.confidence_thresholds['default'])
+        
         if predicted_sign in self.static_signs:
             # Para señas estáticas, requiere poca o nula movilidad
-            if movement_type == "static" and confidence > self.prediction_threshold:
+            if movement_type == "static" and confidence > threshold:
                 return True
-            elif movement_type == "transitional" and confidence > self.prediction_threshold + 0.1:
+            elif movement_type == "transitional" and confidence > threshold + 0.1:
                 return True
         
         return False
@@ -259,11 +278,13 @@ class BidirectionalRealTimeTranslator:
         """
         Determina si se debe predecir una seña dinámica basado en el análisis de movimiento
         """
+        threshold = self.confidence_thresholds.get(predicted_sign, self.confidence_thresholds['default'])
+        
         if predicted_sign in self.dynamic_signs:
             # Para señas dinámicas, requiere movimiento detectado
-            if movement_type == "dynamic" and confidence > self.prediction_threshold:
+            if movement_type == "dynamic" and confidence > threshold:
                 return True
-            elif movement_type == "transitional" and confidence > self.prediction_threshold + 0.15:
+            elif movement_type == "transitional" and confidence > threshold + 0.15:
                 return True
         
         return False
@@ -507,6 +528,70 @@ class BidirectionalRealTimeTranslator:
             cv2.putText(frame, wait_text, (panel_x + 30, panel_y + 60), 
                        cv2.FONT_HERSHEY_SIMPLEX, 1.2, self.ui_colors['light'], 2)
 
+    def normalize_for_dynamic_signs(self, sequence, predicted_sign):
+        """Normalización específica para señas dinámicas como J"""
+        if predicted_sign == 'J' or np.var(sequence) > 0.001:
+            # Normalizar usando RobustScaler para señas dinámicas
+            seq_reshaped = sequence.reshape(-1, sequence.shape[-1])
+            try:
+                seq_normalized = self.scaler.fit_transform(seq_reshaped)
+                return seq_normalized.reshape(sequence.shape)
+            except:
+                return sequence
+        return sequence
+
+    def extract_j_features(self, sequence):
+        """Extrae características específicas para reconocer J"""
+        if len(sequence) < 3:
+            return [0, 0, 0]
+            
+        # 1. Curvatura del movimiento
+        hand_coords = sequence[:, -63:]  # Solo coordenadas de mano
+        x_coords = np.mean(hand_coords[:, 0::3], axis=1)
+        y_coords = np.mean(hand_coords[:, 1::3], axis=1)
+        
+        # Calcular curvatura
+        try:
+            dx = np.gradient(x_coords)
+            dy = np.gradient(y_coords)
+            ddx = np.gradient(dx)
+            ddy = np.gradient(dy)
+            curvature = np.abs(dx * ddy - dy * ddx) / (dx*dx + dy*dy)**1.5
+            avg_curvature = np.mean(curvature[~np.isnan(curvature)])
+        except:
+            avg_curvature = 0
+        
+        # 2. Patrón de velocidad (J acelera al inicio, desacelera al final)
+        velocities = [np.linalg.norm(sequence[i+1] - sequence[i]) 
+                      for i in range(len(sequence)-1)]
+        max_velocity = np.max(velocities) if velocities else 0
+        
+        # 3. Cambio de dirección (característico de J)
+        try:
+            mid_point = len(sequence) // 2
+            first_half_dir = sequence[mid_point] - sequence[0]
+            second_half_dir = sequence[-1] - sequence[mid_point]
+            direction_change = np.dot(first_half_dir, second_half_dir) / (
+                np.linalg.norm(first_half_dir) * np.linalg.norm(second_half_dir))
+        except:
+            direction_change = 0
+        
+        return [avg_curvature, max_velocity, direction_change]
+
+    def boost_j_confidence(self, predicted_sign, confidence, sequence):
+        """Aumenta la confianza para J si tiene características correctas"""
+        if predicted_sign == 'J':
+            j_features = self.extract_j_features(sequence)
+            avg_curvature, max_velocity, direction_change = j_features
+            
+            # Boost de confianza si tiene características de J
+            if avg_curvature > 0.1 and max_velocity > 0.002:
+                confidence = min(1.0, confidence * 1.5)  # Boost de confianza para J
+            elif avg_curvature > 0.05 and max_velocity > 0.001:
+                confidence = min(1.0, confidence * 1.2)  # Boost menor
+                
+        return confidence
+
     def process_frame(self, frame):
         """Procesa un frame y realiza la predicción híbrida"""
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -546,31 +631,51 @@ class BidirectionalRealTimeTranslator:
             # Realizar predicción si el buffer está lleno
             if len(self.sequence_buffer) == self.sequence_length:
                 sequence = np.array(list(self.sequence_buffer))
-                sequence = np.expand_dims(sequence, axis=0)
+                
+                # MEJORA: Normalización específica para señas dinámicas
+                sequence_normalized = self.normalize_for_dynamic_signs(sequence, "")
+                sequence_input = np.expand_dims(sequence_normalized, axis=0)
                 
                 # Calcular características de movimiento para el modelo híbrido
                 motion_features = self._calculate_motion_features(list(self.sequence_buffer))
                 motion_features = np.expand_dims(motion_features, axis=0)
                 
                 # Realizar predicción con ambas entradas
-                predictions = self.model.predict([sequence, motion_features], verbose=0)
+                predictions = self.model.predict([sequence_input, motion_features], verbose=0)
                 predicted_index = np.argmax(predictions)
                 confidence = predictions[0][predicted_index]
                 predicted_sign = self.signs[predicted_index]
                 
+                # MEJORA: Boost de confianza específico para J
+                confidence = self.boost_j_confidence(predicted_sign, confidence, sequence)
+                
+                # MEJORA: Usar umbrales específicos por letra
+                threshold = self.confidence_thresholds.get(predicted_sign, 
+                                                          self.confidence_thresholds['default'])
+                
                 # Análisis de movimiento
                 movement_type, movement_level = self._analyze_movement_pattern()
                 
-                # Aplicar lógica híbrida para validar predicción
+                # Aplicar lógica híbrida mejorada para validar predicción
                 should_predict = False
                 
                 if predicted_sign in self.static_signs:
                     should_predict = self._should_predict_static_sign(predicted_sign, movement_type, confidence)
                 elif predicted_sign in self.dynamic_signs:
-                    should_predict = self._should_predict_dynamic_sign(predicted_sign, movement_type, confidence)
+                    # MEJORA: Lógica especial para J
+                    if predicted_sign == 'J':
+                        # J requiere movimiento pero con umbral más bajo
+                        if confidence > threshold and movement_level > 0.001:
+                            should_predict = True
+                        # Verificar características específicas de J
+                        j_features = self.extract_j_features(sequence)
+                        if j_features[0] > 0.05 and j_features[1] > 0.001:  # Curvatura y velocidad mínimas
+                            should_predict = True
+                    else:
+                        should_predict = self._should_predict_dynamic_sign(predicted_sign, movement_type, confidence)
                 else:
-                    # Para señas que no están clasificadas, usar umbral estándar
-                    should_predict = confidence > self.prediction_threshold
+                    # Para señas que no están clasificadas, usar umbral específico
+                    should_predict = confidence > threshold
                 
                 # Actualizar predicción si es válida
                 if should_predict:
